@@ -1,0 +1,23 @@
+{
+	"PluginFileVersion" : 3,
+
+	"FriendlyName" : "Play Sound from Disk Plugin",
+	"Version" : 1,
+	"VersionName" : "1.0",
+	"CreatedBy" : "n00854180t",
+	"CreatedByURL" : "https://forums.unrealengine.com/showthread.php?28520-PLUGIN-Play-Sound-Files-From-Disk-(OGG)&p=115598",
+	"EngineVersion" : 1579795,
+	"Description" : "Play (OGG) sound files from disk.",
+	"Category" : "Audio",
+	
+	"Modules" :
+	[		
+		{
+			"Name" : "OggBPLibrary",
+			"Type" : "Runtime",
+			"LoadingPhase" : "PreDefault"
+		},
+
+		
+	]
+}
