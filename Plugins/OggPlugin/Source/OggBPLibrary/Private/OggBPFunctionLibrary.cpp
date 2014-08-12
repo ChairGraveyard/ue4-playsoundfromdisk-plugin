@@ -7,12 +7,12 @@
 UOggBPFunctionLibrary::UOggBPFunctionLibrary(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	
+	 
 }
 
 class UAudioComponent* UOggBPFunctionLibrary::PlaySoundAttachedFromFile(const FString& FilePath, class USceneComponent* AttachToComponent, FName AttachPointName, FVector Location, EAttachLocation::Type LocationType, bool bStopWhenAttachedToDestroyed, float VolumeMultiplier, float PitchMultiplier, float StartTime, class USoundAttenuation* AttenuationSettings)
 {	
-	USoundWave* sw = getSoundWaveFromFilePath(FilePath);
+	USoundWave* sw = GetSoundWaveFromFile(FilePath);
 
 	if (!sw)
 		return NULL;
@@ -22,7 +22,7 @@ class UAudioComponent* UOggBPFunctionLibrary::PlaySoundAttachedFromFile(const FS
 
 void UOggBPFunctionLibrary::PlaySoundAtLocationFromFile(UObject* WorldContextObject, const FString& FilePath, FVector Location, float VolumeMultiplier, float PitchMultiplier, float StartTime, class USoundAttenuation* AttenuationSettings)
 {
-	USoundWave* sw = getSoundWaveFromFilePath(FilePath);
+	USoundWave* sw = GetSoundWaveFromFile(FilePath);
 
 	if (!sw)
 		return;
@@ -30,7 +30,7 @@ void UOggBPFunctionLibrary::PlaySoundAtLocationFromFile(UObject* WorldContextObj
 	UGameplayStatics::PlaySoundAtLocation(WorldContextObject, sw, Location, VolumeMultiplier, PitchMultiplier, StartTime, AttenuationSettings);
 }
 
-class USoundWave* UOggBPFunctionLibrary::getSoundWaveFromFilePath(const FString& FilePath)
+class USoundWave* UOggBPFunctionLibrary::GetSoundWaveFromFile(const FString& FilePath)
 {
 	USoundWave* sw = (USoundWave*)StaticConstructObject(USoundWave::StaticClass());
 
@@ -72,7 +72,7 @@ int UOggBPFunctionLibrary::fillSoundWaveInfo(class USoundWave* sw, TArray<uint8>
         return 1;
     }
 
-	sw->SoundGroup = ESoundGroup::SOUNDGROUP_Voice;
+	sw->SoundGroup = ESoundGroup::SOUNDGROUP_Default;
     sw->NumChannels = info.NumChannels;
     sw->Duration = info.Duration;
     sw->RawPCMDataSize = info.SampleDataSize;

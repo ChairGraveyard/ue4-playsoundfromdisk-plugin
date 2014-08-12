@@ -29,7 +29,7 @@ class OGGBPLIBRARY_API UOggBPFunctionLibrary : public UBlueprintFunctionLibrary
 	* @param VolumeMultiplier - Volume multiplier
 	* @param PitchMultiplier - PitchMultiplier
 	* @param AttenuationSettings - Override attenuation settings package to play sound with
-	*/
+	*/ 
 	UFUNCTION(BlueprintCallable, Category = "OggBPLibrary", meta = (VolumeMultiplier = "1.0", PitchMultiplier = "1.0", AdvancedDisplay = "2", UnsafeDuringActorConstruction = "true"))
 	static class UAudioComponent* PlaySoundAttachedFromFile(const FString& FilePath, class USceneComponent* AttachToComponent, FName AttachPointName = NAME_None, FVector Location = FVector(ForceInit), EAttachLocation::Type LocationType = EAttachLocation::SnapToTarget, bool bStopWhenAttachedToDestroyed = false, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundAttenuation* AttenuationSettings = NULL);
 	
@@ -41,8 +41,15 @@ class OGGBPLIBRARY_API UOggBPFunctionLibrary : public UBlueprintFunctionLibrary
 	* @param PitchMultiplier - PitchMultiplier
 	* @param AttenuationSettings - Override attenuation settings package to play sound with
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Audio", meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject", VolumeMultiplier = "1.0", PitchMultiplier = "1.0", AdvancedDisplay = "3", UnsafeDuringActorConstruction = "true"))
+	UFUNCTION(BlueprintCallable, Category = "OggBPLibrary", meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject", VolumeMultiplier = "1.0", PitchMultiplier = "1.0", AdvancedDisplay = "3", UnsafeDuringActorConstruction = "true"))
 	static void PlaySoundAtLocationFromFile(UObject* WorldContextObject, const FString& FilePath, FVector Location, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundAttenuation* AttenuationSettings = NULL);
+	
+	/** Creates a USoundWave* from file path.
+	* Read .ogg header file and refresh USoundWave metadata.
+	* @param FilePath		path to file to create sound wave from
+	*/
+	UFUNCTION(BlueprintCallable, Category = "OggBPLibrary")
+	static class USoundWave* GetSoundWaveFromFile(const FString& FilePath);
 
 private:
 	// Thanks to @keru for the base code for loading an Ogg into a USoundWave: 
@@ -57,14 +64,7 @@ private:
         */
         static int fillSoundWaveInfo(USoundWave* sw, TArray<uint8>* rawFile);
 
-		/**
-		* Read .ogg header file and refresh USoundWave metadata.
-		* @param sw             wave to put metadata
-		* @param rawFile        pointer to src file in memory
-		* @return 0     if everything is ok
-		*                 1 if couldn't read metadata.
-		*/
-		static class USoundWave* getSoundWaveFromFilePath(const FString& FilePath);
+
 
         /**
         * Tries to find out FSoundSource object associated to the USoundWave.
